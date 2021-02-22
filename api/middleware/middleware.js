@@ -1,11 +1,5 @@
 const User = require('../users/users-model');
 
-module.exports = {
-  checkPayload,
-  checkUserInDb,
-  checkUserExists
-};
-
 const checkPayload = (req, res, next) => {
   if (!req.body.username || !req.body.password) {
     res.status(401).json('Username or password missing');
@@ -33,14 +27,22 @@ const checkUserExists = async (req, res, next) => {
   try {
     const rows = await User.findBy({
       username: req.body.username
-    })
-    if(rows.length){
-      req.userData = rows[0]
-      next()
+    });
+    if (rows.length) {
+      req.userData = rows[0];
+      next();
     } else {
-      res.status(401).json('Login error, check credentials')
+      res
+        .status(401)
+        .json('Login error, check credentials');
     }
   } catch (error) {
-    res.status(500).json(`Server error: ${err}`)
+    res.status(500).json(`Server error: ${err}`);
   }
-}
+};
+
+module.exports = {
+  checkPayload,
+  checkUserInDb,
+  checkUserExists
+};

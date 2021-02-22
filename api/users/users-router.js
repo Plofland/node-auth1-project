@@ -13,4 +13,4 @@ router.get('/', (req, res) => {
     .catch((err) => res.send(err));
 });
 
-module.exports = server;
+module.exports = router;
