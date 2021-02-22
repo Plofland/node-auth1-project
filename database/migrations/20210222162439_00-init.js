@@ -11,7 +11,7 @@ exports.up = function (knex) {
         .notNullable()
         .unique()
         .index();
-      table.string('username', 256).notNullable();
+      table.string('password', 256).notNullable();
       table
         .integer('role')
         .unsigned()
@@ -23,6 +23,6 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
   return knex.schema
-    .dropTableIfExists('users')
-    .dropTableIfExists('roles');
+    .dropTableIfExists('roles')
+    .dropTableIfExists('users');
 };
