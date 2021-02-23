@@ -20,7 +20,7 @@ const config = {
     httpOnly: true //can't use javascript to read the cookies
   },
   resave: false,
-  saveUnitialized: false, //anytime we login, it renews the session
+  saveUninitialized: false, //anytime we login, it renews the session
 
   store: new KnexSessionStore({
     knex: require('../database/dbConfig.js'),
