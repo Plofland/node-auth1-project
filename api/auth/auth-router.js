@@ -25,24 +25,29 @@ router.post(
   }
 );
 
-router.post('/login', checkUserExists, (req, res) => {
-  try {
-    const verified = bcrypt.compareSync(
-      req.body.password,
-      req.userData.password
-    );
-    if (verified) {
-      req.session.user = req.userData;
-      res.json(`Welcome back ${req.userData.username}`);
-    } else {
-      res
-        .status(401)
-        .json('Username or password are incorrect');
+router.post(
+  '/login',
+  checkPayload,
+  checkUserExists,
+  (req, res) => {
+    try {
+      const verified = bcrypt.compareSync(
+        req.body.password,
+        req.userData.password
+      );
+      if (verified) {
+        req.session.user = req.userData;
+        res.json(`Welcome back ${req.userData.username}`);
+      } else {
+        res
+          .status(401)
+          .json('Username or password are incorrect');
+      }
+    } catch (err) {
+      res.status(500).json({ message: err.message });
     }
-  } catch (err) {
-    res.status(500).json({ message: err.message });
   }
-});
+);
 
 router.get('/logout', (req, res) => {
   if (req.session) {
